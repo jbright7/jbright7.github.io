@@ -1,0 +1,80 @@
+:root {
+  --paper: #ffffff;
+  --ink: #202122;
+  --muted: #54595d;
+  --rule: #c8ccd1;
+  --link: #3366cc;
+  --box: #f8f9fa;
+  --measure: 46rem;
+  font-family: 'Source Serif 4 Variable', Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #101418;
+    --ink: #eaecf0;
+    --muted: #a2a9b1;
+    --rule: #3a3f44;
+    --link: #88a3e8;
+    --box: #1b1f23;
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.65; }
+a { color: var(--link); }
+img, video { max-width: 100%; }
+
+.site-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  max-width: 72rem; margin: 0 auto; padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.site-header nav a { margin-left: 1rem; }
+.site-name { font-weight: 600; color: var(--ink); text-decoration: none; }
+
+.note-grid {
+  display: grid; grid-template-columns: 14rem minmax(0, var(--measure));
+  gap: 3rem; max-width: 72rem; margin: 0 auto; padding: 2rem 1.5rem 4rem;
+}
+.toc { position: sticky; top: 1.5rem; align-self: start; font-size: 0.9rem; }
+.toc-title { font-weight: 600; margin: 0 0 0.5rem; }
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: 0.25rem 0; }
+.toc .depth-3 { padding-left: 1rem; }
+
+.note h1 {
+  font-size: 2.2rem; line-height: 1.2; margin: 0 0 0.25rem;
+  padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule);
+}
+.note h2 { margin-top: 2.5rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--rule); }
+.note-meta, .tags { color: var(--muted); font-size: 0.9rem; }
+.status {
+  display: inline-block; margin-right: 0.5rem; padding: 0 0.55rem;
+  border: 1px solid var(--rule); border-radius: 999px; font-size: 0.8rem;
+}
+
+.infobox {
+  float: right; width: 18rem; margin: 0.5rem 0 1rem 1.5rem; padding: 0.75rem 1rem;
+  background: var(--box); border: 1px solid var(--rule); font-size: 0.9rem;
+}
+.infobox-title { font-weight: 600; text-align: center; margin: 0 0 0.5rem; }
+.infobox p { margin: 0.35rem 0; }
+
+.callout {
+  margin: 1.5rem 0; padding: 0.75rem 1rem;
+  border-left: 4px solid var(--link); background: var(--box);
+}
+.callout-title { font-weight: 600; margin: 0 0 0.25rem; }
+
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
+.figure { margin: 2rem 0; }
+.figure figcaption { color: var(--muted); font-size: 0.9rem; }
+.figure label { display: block; margin: 0.5rem 0; }
+.backlinks { margin-top: 3rem; font-size: 0.95rem; }
+
+@media (max-width: 800px) {
+  .note-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .toc { position: static; }
+  .infobox { float: none; width: auto; margin: 1rem 0; }
+}

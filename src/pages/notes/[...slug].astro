@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import NoteLayout from '../../layouts/NoteLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+
+  return notes.map((note) => {
+    // Matches links like ](/notes/some-note) or ](/notes/some-note/#section)
+    const linkPattern = new RegExp(`\\]\\(/notes/${note.id}/?(#[^)]*)?\\)`);
+    const backlinks = notes.filter(
+      (other) => other.id !== note.id && linkPattern.test(other.body ?? '')
+    );
+    return { params: { slug: note.id }, props: { note, backlinks } };
+  });
+}
+
+const { note, backlinks } = Astro.props;
+const { Content, headings } = await render(note);
+---
+<NoteLayout note={note} headings={headings} backlinks={backlinks}>
+  <Content />
+</NoteLayout>

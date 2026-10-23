@@ -1,0 +1,15 @@
+---
+const { kind = 'note', title } = Astro.props;
+const labels = {
+  definition: 'Definition',
+  theorem: 'Theorem',
+  lemma: 'Lemma',
+  example: 'Example',
+  note: 'Note',
+};
+const label = labels[kind] ?? 'Note';
+---
+<div class={`callout callout-${kind}`}>
+  <p class="callout-title">{label}{title && ` (${title})`}</p>
+  <slot />
+</div>

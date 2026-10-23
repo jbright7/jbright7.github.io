@@ -1,0 +1,54 @@
+---
+const { mu = 0, sigma = 1 } = Astro.props;
+---
+<figure class="figure gaussian-explorer">
+  <div class="plot"></div>
+  <label>
+    Mean μ
+    <input type="range" name="mu" min="-3" max="3" step="0.1" value={mu} />
+    <output></output>
+  </label>
+  <label>
+    Standard deviation σ
+    <input type="range" name="sigma" min="0.3" max="3" step="0.1" value={sigma} />
+    <output></output>
+  </label>
+  <figcaption><slot /></figcaption>
+</figure>
+
+<script>
+  import Plotly from 'plotly.js-dist-min';
+
+  const pdf = (x, mu, sigma) =>
+    Math.exp(-((x - mu) ** 2) / (2 * sigma ** 2)) / (sigma * Math.sqrt(2 * Math.PI));
+
+  const xs = Array.from({ length: 401 }, (_, i) => -6 + i * 0.03);
+
+  document.querySelectorAll('.gaussian-explorer').forEach((fig) => {
+    const plot = fig.querySelector('.plot');
+    const muInput = fig.querySelector('[name=mu]');
+    const sigmaInput = fig.querySelector('[name=sigma]');
+
+    const draw = () => {
+      const mu = Number(muInput.value);
+      const sigma = Number(sigmaInput.value);
+      muInput.nextElementSibling.textContent = mu.toFixed(1);
+      sigmaInput.nextElementSibling.textContent = sigma.toFixed(1);
+
+      Plotly.react(
+        plot,
+        [{ x: xs, y: xs.map((x) => pdf(x, mu, sigma)), mode: 'lines' }],
+        {
+          margin: { t: 10, r: 10, b: 40, l: 50 },
+          xaxis: { title: { text: 'x' } },
+          yaxis: { title: { text: 'density' }, range: [0, 1.4] },
+        },
+        { displayModeBar: false, responsive: true }
+      );
+    };
+
+    muInput.addEventListener('input', draw);
+    sigmaInput.addEventListener('input', draw);
+    draw();
+  });
+</script>

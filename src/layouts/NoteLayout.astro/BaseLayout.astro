@@ -1,0 +1,26 @@
+---
+import 'katex/dist/katex.min.css';
+import '@fontsource-variable/source-serif-4';
+import '../styles/global.css';
+
+const { title, description = '' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-name" href="/">Your Name</a>
+      <nav>
+        <a href="/notes/">Notes</a>
+        <a href="/cv.pdf">CV</a>
+      </nav>
+    </header>
+    <slot />
+  </body>
+</html>

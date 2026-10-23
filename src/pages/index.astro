@@ -1,16 +1,30 @@
 ---
----
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+const recent = (await getCollection('notes'))
+  .sort((a, b) => b.data.updated.valueOf() - a.data.updated.valueOf())
+  .slice(0, 5);
+---
+<BaseLayout title="Jonathan Bright" description="PhD student in physics at Caltech.">
+  <main class="note-grid">
+    <div></div>
+    <article class="note">
+      <h1>Your Name</h1>
+      <p>
+        I'm a PhD student at Caltech currently broadly interested in biophysics.
+      </p>
+      <p>
+        <a href="/cv.pdf">CV</a>,
+        <a href="mailto:jbright@caltech.edu">email</a>,
+        <a href="https://github.com/jbright7">GitHub</a>
+      </p>
+      <h2>Recently updated notes</h2>
+      <ul>
+        {recent.map((n) => (
+          <li><a href={`/notes/${n.id}/`}>{n.data.title}</a></li>
+        ))}
+      </ul>
+    </article>
+  </main>
+</BaseLayout>

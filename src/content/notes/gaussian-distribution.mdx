@@ -1,0 +1,53 @@
+---
+title: The Gaussian distribution
+description: Where the bell curve comes from and why it shows up everywhere. (AI assisted: just for testing Plotly implementation into notes)
+created: 2026-10-23
+updated: 2026-10-23
+status: seedling
+tags: [probability, statistics]
+---
+import Infobox from '../../components/Infobox.astro';
+import Callout from '../../components/Callout.astro';
+import GaussianExplorer from '../../components/GaussianExplorer.astro';
+
+<Infobox title="Normal distribution">
+
+**Parameters:** mean $\mu \in \mathbb{R}$, standard deviation $\sigma > 0$
+
+**Support:** $x \in \mathbb{R}$
+
+**Mean, median, mode:** $\mu$
+
+**Variance:** $\sigma^2$
+
+</Infobox>
+
+The **Gaussian**, or normal, distribution is the bell-shaped curve that appears
+whenever many small, independent effects add up.[^clt]
+
+## Definition
+
+<Callout kind="definition">
+
+A random variable $X$ is normally distributed, written $X \sim \mathcal{N}(\mu, \sigma^2)$,
+if its probability density is
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).
+$$
+
+</Callout>
+
+## Building intuition
+
+<GaussianExplorer>
+  Drag the sliders: μ slides the curve left and right, and σ stretches it while
+  the area underneath stays equal to one.
+</GaussianExplorer>
+
+## Why it shows up everywhere
+
+The short answer is the [central limit theorem](/notes/central-limit-theorem/),
+which says that sums of many independent random variables tend toward a Gaussian.
+
+[^clt]: Under mild conditions on the individual effects; see the central limit theorem note.

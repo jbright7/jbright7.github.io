@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => b.data.updated.valueOf() - a.data.updated.valueOf()
+);
+---
+<BaseLayout title="Notes" description="An assortment of notes (some more pedagogical than others) on things I find interesting or important to my research.">
+  <main class="note-grid">
+    <div></div>
+    <article class="note">
+      <h1>Notes</h1>
+      <p>My living notes.</p>
+      <ul>
+        {notes.map((n) => (
+          <li>
+            <a href={`/notes/${n.id}/`}>{n.data.title}</a>
+            <span class="status">{n.data.status}</span>
+            {n.data.description && <div class="note-meta">{n.data.description}</div>}
+          </li>
+        ))}
+      </ul>
+    </article>
+  </main>
+</BaseLayout>
